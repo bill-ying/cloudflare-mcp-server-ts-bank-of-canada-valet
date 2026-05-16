@@ -59,15 +59,18 @@ describe("ToolRegistry", () => {
     const registry = new ToolRegistry();
     registry.register(new DummyTool("tool_a"));
 
-    // Mock McpServer with a tool() method
+    // Mock McpServer with a registerTool() method
     const mockServer = {
-      tool: vi.fn(),
+      registerTool: vi.fn(),
     };
 
     registry.bindToServer(mockServer as any);
 
-    expect(mockServer.tool).toHaveBeenCalledOnce();
-    expect(mockServer.tool.mock.calls[0][0]).toBe("tool_a");
-    expect(mockServer.tool.mock.calls[0][1]).toBe("dummy");
+    expect(mockServer.registerTool).toHaveBeenCalledOnce();
+    expect(mockServer.registerTool.mock.calls[0][0]).toBe("tool_a");
+    expect(mockServer.registerTool.mock.calls[0][1]).toEqual({
+      description: "dummy",
+      inputSchema: DummySchema.shape,
+    });
   });
 });
