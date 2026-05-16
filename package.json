@@ -1,0 +1,44 @@
+{
+  "name": "mcp-server-bank-of-canada-valet",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "MCP Server for Bank of Canada exchange rates via the Valet API, deployed on Cloudflare Workers.",
+  "main": "src/worker.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bill-ying/mcp-server-ts-bank-of-canada-valet.git"
+  },
+  "keywords": [
+    "mcp",
+    "bank-of-canada",
+    "exchange-rates",
+    "cloudflare-workers",
+    "valet-api"
+  ],
+  "author": "Bill Ying",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/bill-ying/mcp-server-ts-bank-of-canada-valet/issues"
+  },
+  "homepage": "https://github.com/bill-ying/mcp-server-ts-bank-of-canada-valet#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260510.1",
+    "tsx": "^4.22.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0",
+    "wrangler": "^4.90.0"
+  }
+}

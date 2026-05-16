@@ -1,0 +1,6 @@
+name = "mcp-server-bank-of-canada-valet"
+main = "src/worker.ts"
+compatibility_date = "2025-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Cloudflare Container deployment options removed.
