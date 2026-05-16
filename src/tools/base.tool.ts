@@ -11,6 +11,7 @@
  */
 
 import { z } from "zod";
+import { type ToolAnnotations } from "@modelcontextprotocol/sdk/types.js";
 
 /** Standard MCP tool response content item. */
 export interface ToolContent {
@@ -21,6 +22,7 @@ export interface ToolContent {
 /** Standard MCP tool response shape. */
 export interface ToolResponse {
   content: ToolContent[];
+  structuredContent?: Record<string, unknown>;
   isError?: boolean;
 }
 
@@ -31,6 +33,9 @@ export abstract class BaseTool<
   abstract readonly name: string;
   abstract readonly description: string;
   abstract readonly schema: z.ZodObject<TSchema>;
+  
+  readonly annotations?: ToolAnnotations;
+  readonly outputSchema?: z.ZodSchema<any>;
 
   /**
    * Template Method: validates input, executes logic, formats output.

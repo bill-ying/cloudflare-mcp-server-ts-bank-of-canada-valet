@@ -38,10 +38,14 @@ export class ToolRegistry {
    */
   bindToServer(server: McpServer): void {
     for (const tool of this.tools.values()) {
-      server.tool(
+      server.registerTool(
         tool.name,
-        tool.description,
-        tool.schema.shape,
+        {
+          description: tool.description,
+          inputSchema: tool.schema.shape,
+          ...(tool.outputSchema ? { outputSchema: tool.outputSchema } : {}),
+          ...(tool.annotations ? { annotations: tool.annotations } : {}),
+        },
         async (args: any) => {
           return tool.run(args) as any;
         },

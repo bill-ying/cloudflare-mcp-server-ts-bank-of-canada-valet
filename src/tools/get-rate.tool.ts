@@ -31,6 +31,21 @@ export class GetRateTool extends BaseTool<
   readonly description =
     "Get the exchange rate between USD and CAD for a specific date from Bank of Canada.";
   readonly schema = GetRateSchema;
+  
+  readonly annotations = {
+    readOnlyHint: true, // Tool only fetches data, no mutations
+  };
+
+  readonly outputSchema = z.object({
+    success: z.boolean().describe("True if rate data was found, false otherwise (e.g., weekends/holidays)"),
+    message: z.string().optional().describe("Explanation if no data was found"),
+    rateDate: z.string().optional().describe("The date the exchange rate applies to"),
+    fromCurrency: z.string().optional().describe("Source currency code"),
+    toCurrency: z.string().optional().describe("Target currency code"),
+    rate: z.number().optional().describe("The exchange rate value"),
+    amount: z.number().optional().describe("The original amount converted (if provided)"),
+    convertedAmount: z.number().optional().describe("The resulting converted amount (if provided)"),
+  });
 
   constructor(private readonly service: FxRateService) {
     super();
@@ -56,6 +71,10 @@ export class GetRateTool extends BaseTool<
             text: "No exchange rate data available for that date.",
           },
         ],
+        structuredContent: {
+          success: false,
+          message: "No exchange rate data available for that date."
+        }
       };
     }
 
@@ -67,6 +86,24 @@ export class GetRateTool extends BaseTool<
       text += `\n${result.amount} ${result.fromCurrency} = ${result.convertedAmount} ${result.toCurrency}`;
     }
 
-    return { content: [{ type: "text", text }] };
+    const structuredContent: Record<string, unknown> = {
+      success: true,
+      rateDate: result.rateDate,
+      fromCurrency: result.fromCurrency,
+      toCurrency: result.toCurrency,
+      rate: result.rate,
+    };
+
+    if (result.amount !== undefined) {
+      structuredContent.amount = result.amount;
+    }
+    if (result.convertedAmount !== undefined) {
+      structuredContent.convertedAmount = result.convertedAmount;
+    }
+
+    return { 
+      content: [{ type: "text", text }],
+      structuredContent
+    };
   }
 }
