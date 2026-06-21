@@ -100,7 +100,7 @@ Exchange rate on 2024-01-15: 1 USD = 1.3456 CAD
 
 ```text
                ┌→ Build & Type Check → Test ─┐
-Push to main ─┤                            ├→ Deploy to CF Workers
+Push to main  ─┤                             ├→ Deploy to CF Workers
                └→ Snyk Scan ─────────────────┘
 ```
 
