@@ -24,14 +24,6 @@ This is a standalone MCP server that exposes the **Bank of Canada's Valet API** 
 - **npm**: >= 10.x
 - **Wrangler CLI**: `npm install -g wrangler` (or use `npx`)
 
-### Installation
-
-```bash
-git clone https://github.com/bill-ying/mcp-server-ts-bank-of-canada-valet.git
-cd mcp-server-ts-bank-of-canada-valet
-npm install
-```
-
 ### Local Development
 
 Start the Wrangler dev server:
